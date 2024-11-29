@@ -3,7 +3,7 @@
     {
       "id": "CARGO001",
       "name": "Строительные материалы",
-      "status": "В пути",
+      "status": "Ожидает отправки",
       "origin": "Москва",
       "destination": "Казань",
       "departureDate": "2024-11-24"

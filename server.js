@@ -24,32 +24,36 @@ app.get('/api/items', (req, res) => {
 });
 
 app.post('/api/items', (req, res) => {
-  const updatedItems = req.body; // Expecting an array of items
+  const updatedItems = req.body.cargoList; // Extract the array from cargoList
+
+  if (!Array.isArray(updatedItems)) {
+    return res.status(400).json({ error: 'cargoList must be an array' });
+  }
 
   const filePath = path.join(__dirname, 'data', 'db.json');
 
+  // Read the current db.json file
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to read db.json' });
     }
 
-    let jsonData = JSON.parse(data);
+    let dbData;
+    try {
+      dbData = JSON.parse(data);
+    } catch (parseError) {
+      return res.status(500).json({ error: 'Failed to parse db.json' });
+    }
 
-    updatedItems.forEach(updatedItem => {
-      const itemIndex = jsonData.cargoList.findIndex(item => item.id === updatedItem.id);
+    // Update the cargoList in db.json
+    dbData.cargoList = updatedItems;
 
-      if (itemIndex === -1) {
-        console.log(`Item with id ${updatedItem.id} not found`);
-      } else {
-        jsonData.cargoList[itemIndex] = { ...jsonData.cargoList[itemIndex], ...updatedItem };
-      }
-    });
-
-    fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+    // Write the updated data back to the file
+    fs.writeFile(filePath, JSON.stringify(dbData, null, 2), 'utf8', (err) => {
       if (err) {
         return res.status(500).json({ error: 'Failed to update db.json' });
       }
-      res.json({ message: 'Items updated successfully' });
+      res.json({ message: 'Data updated successfully' });
     });
   });
 });

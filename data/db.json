@@ -15,6 +15,14 @@
       "origin": "Санкт-Петербург",
       "destination": "Екатеринбург",
       "departureDate": "2024-11-26"
+    },
+    {
+      "id": "CARGO003",
+      "name": "df",
+      "status": "f",
+      "origin": "f",
+      "destination": "f",
+      "departureDate": "0333-03-31"
     }
   ]
 }

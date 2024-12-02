@@ -1,32 +1,29 @@
-document.addEventListener("DOMContentLoaded", () => {
+import renderTable from "./renderTable.js"
+
+export default function submitForm() {
   document.getElementById('cargoForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
 
     try {
-      // Fetch existing data from the server
       const response = await fetch('/api/items');
       const data = await response.json();
       const cargoList = data.cargoList;
 
-      // Generate a new ID
-      let nextId = 1; // Default ID if the list is empty
+      let nextId = 1;
       if (cargoList.length > 0) {
-        // Find the maximum numeric part of the IDs
         const maxId = Math.max(
           ...cargoList.map((item) => parseInt(item.id.replace('CARGO', '')))
         );
         nextId = maxId + 1;
       }
-      const newId = `CARGO${String(nextId).padStart(3, '0')}`; // Format as CARGO003, CARGO004, etc.
+      const newId = `CARGO${String(nextId).padStart(3, '0')}`;
 
-      // Extract values from the form
       const name = document.getElementById('name').value;
       const status = document.getElementById('status').value;
       const origin = document.getElementById('origin').value;
       const destination = document.getElementById('destination').value;
       const departureDate = document.getElementById('departureDate').value;
 
-      // Create a new cargo item
       const newCargoItem = {
         id: newId,
         name: name,
@@ -36,21 +33,19 @@ document.addEventListener("DOMContentLoaded", () => {
         departureDate: departureDate,
       };
 
-      // Add the new item to the cargo list
       cargoList.push(newCargoItem);
 
-      // Update the server with the new data
       const updateResponse = await fetch('/api/items', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cargoList }), // Post the updated data
+        body: JSON.stringify({ cargoList }),
       });
 
       if (updateResponse.ok) {
         alert('Cargo item added successfully!');
-        // Optionally clear the form
+        renderTable(cargoList);
         e.target.reset();
       } else {
         alert('Failed to update the server.');
@@ -60,4 +55,4 @@ document.addEventListener("DOMContentLoaded", () => {
       alert('An error occurred while adding the cargo item.');
     }
   });
-})
+}

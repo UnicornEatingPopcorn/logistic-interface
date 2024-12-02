@@ -32,40 +32,29 @@
       <div class="form-row">
         <div class="col-md-4 mb-3">
           <label for="name">Название</label>
-          <input type="text" class="form-control is-valid" id="name" placeholder="Name" value="" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
+          <input type="text" class="form-control" id="name" placeholder="Name" value="" required>
         </div>
         <div class="col-md-4 mb-3">
           <label for="status">Статус</label>
-          <input type="text" class="form-control is-valid" id="status" placeholder="Status" value="" required>
-          <div class="valid-feedback">
-            Looks good!
-          </div>
+          <select id="status" class="custom-select" required>
+            <option selected value="В пути">В пути</option>
+            <option value="Ожидает отправки">Ожидает отправки</option>
+            <option value="Доставлен">Доставлен</option>
+          </select>
         </div>
         <div class="col-md-4 mb-3">
           <label for="origin">Пункт отправления</label>
-          <input type="text" class="form-control is-invalid" id="origin" placeholder="Origin" value="" required>
-          <div class="invalid-feedback">
-            Please choose a username.
-          </div>
+          <input type="text" class="form-control" id="origin" placeholder="Origin" value="" required>
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-6 mb-3">
           <label for="destination">Пункт назначения</label>
-          <input type="text" class="form-control is-invalid" id="destination" placeholder="Destination" required>
-          <div class="invalid-feedback">
-            Please provide a valid city.
-          </div>
+          <input type="text" class="form-control" id="destination" placeholder="Destination" required>
         </div>
         <div class="col-md-3 mb-3">
           <label for="departureDate">Дата отправления</label>
-          <input type="date" class="form-control is-invalid" id="departureDate" placeholder="Date" required>
-          <div class="invalid-feedback">
-            Please provide a valid state.
-          </div>
+          <input type="date" class="form-control" id="departureDate" placeholder="Date" required>
         </div>
       </div>
       <button class="btn btn-primary" type="submit">Submit form</button>
